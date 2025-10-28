@@ -1,0 +1,38 @@
+# 文件路径: .github/workflows/cron.yml
+
+name: Daily Bitcoin Price Notifier
+
+on:
+  # 允许您在 GitHub Actions 页面手动触发此工作流（方便测试）
+  workflow_dispatch:
+
+  # 自动定时触发
+  schedule:
+    # 9:00 (UTC+8) every day
+    - cron: '0 1 * * *'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python and uv
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v1
+
+      - name: Install dependencies with uv
+        run: |
+          uv pip install .
+
+      - name: Run Python Script
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python main.py
