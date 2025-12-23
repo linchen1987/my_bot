@@ -44,4 +44,22 @@ jobs:
           uv run python main.py
 
       - name: Keepalive Workflow
-        uses: gautamkrishnar/keepalive-workflow@v2
+        shell: bash
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Check time since last commit
+          last_commit_date=$(git log -1 --format=%ct)
+          current_date=$(date +%s)
+          days_diff=$(( (current_date - last_commit_date) / 86400 ))
+          
+          echo "Days since last commit: $days_diff"
+          
+          if [ $days_diff -gt 50 ]; then
+            echo "Pushing empty commit to keep workflow active..."
+            git commit --allow-empty -m "Keepalive workflow [skip ci]"
+            git push
+          else
+            echo "Repository is active. No action needed."
+          fi
