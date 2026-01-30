@@ -10,3 +10,6 @@ dependencies = [
     "akshare>=1.18.20",
     "pandas>=2.0.0",
 ]
+
+[tool.setuptools]
+py-modules = ["main", "crypto", "a_stock"]
