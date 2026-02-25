@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from crypto import get_crypto_price
 from a_stock import get_a_stock_prices
+from precious_metals import get_precious_metals_prices
 
 load_dotenv()
 
@@ -18,6 +19,7 @@ def main():
     messages = []
     messages.extend(get_crypto_price())
     messages.extend(get_a_stock_prices())
+    messages.extend(get_precious_metals_prices())
 
     message = "\n".join(messages)
 
