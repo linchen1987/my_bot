@@ -18,4 +18,4 @@ dev = [
 ]
 
 [tool.setuptools]
-py-modules = ["main", "crypto", "a_stock", "precious_metals"]
+py-modules = ["main", "crypto", "a_stock", "precious_metals", "us_indices"]
